@@ -7,16 +7,38 @@
 //
 
 #import "AppDelegate.h"
+#import "SWRevealViewController.h"
+#import "frontViewController.h"
+#import "rearViewController.h"
+#import "rightViewController.h"
 
 @interface AppDelegate ()
 
 @end
 
 @implementation AppDelegate
-
+@synthesize window = _window;
+@synthesize viewController = _viewController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+
+    UIWindow *window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window = window;
+    
+    frontViewController *frontView = [[frontViewController alloc] init];
+    rearViewController *rearView = [[rearViewController alloc] init];
+    rightViewController *rightView = rightView = [[rightViewController alloc] init];
+    
+    UINavigationController *frontNavigationController = [[UINavigationController alloc] initWithRootViewController:frontView];
+    UINavigationController *rearNavigationController = [[UINavigationController alloc] initWithRootViewController:rearView];
+    
+    SWRevealViewController *revealController = [[SWRevealViewController alloc] initWithRearViewController:rearNavigationController frontViewController:frontNavigationController];
+    
+    revealController.delegate = self;
+    revealController.rightViewController = rightView;
+    self.viewController = revealController;
+    self.window.rootViewController = self.viewController;
+    [self.window makeKeyAndVisible];
     return YES;
 }
 
